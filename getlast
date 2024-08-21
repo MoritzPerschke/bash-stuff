@@ -1,0 +1,8 @@
+#! /bin/bash -i
+# use first parameter of default
+filename=${1:-shorthist.txt}
+# get command before this scripts last 4 lines and invocation of script
+last_command=$(fc -ln -6 -6 | sed 's/^[ \t]*//')
+
+echo "$last_command >> $filename"
+echo "$last_command" >> "$filename"
