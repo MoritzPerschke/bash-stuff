@@ -1,4 +1,4 @@
-#!/bin/bash -i
+#! /bin/bash
 # get command before this scripts shebang and invocation of script
 last_command=$(fc -ln -4 -4 | sed 's/^[ \t]*//')
 s_flag=false
