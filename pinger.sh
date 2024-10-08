@@ -14,19 +14,19 @@ while IFS= read -r url; do
 
 	case $first_digit in
 		2)
-			echo -e "$url Status: ${GREEN}$status_code${NC}"
+			echo -e "${url:8} Status: ${GREEN}$status_code${NC}"
 			;;
 		3)
-			echo -e "$url Status: ${YELLOW}$status_code${NC}"
+			echo -e "${url:8} Status: ${YELLOW}$status_code${NC}"
 			;;
 		4)
-			echo -e "$url Status: ${RED}$status_code${NC}"
+			echo -e "${url:8} Status: ${RED}$status_code${NC}"
 			;;
 		5)
-			echo -e "$url Status: ${RED}$status_code${NC}"
+			echo -e "${url:8} Status: ${RED}$status_code${NC}"
 			;;
 		*)
-			echo -e "$url Status: ${RED}None${NC}"
+			echo -e "${url:8} Status: ${RED}None${NC}"
 			;;
 
 	esac
