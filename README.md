@@ -13,3 +13,7 @@ The script also supports a couple options:
     -h            : help
     
 ```
+## archive
+Simple archiving script, walks all subdirectories in current dir
+    - pulls in every directory which contains a `.git` directory
+    - deletes `build` `target` `env` directories
