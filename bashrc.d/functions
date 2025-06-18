@@ -1,0 +1,141 @@
+#!/bin/bash
+
+# "alias" `vim` to neovim, if given an argument opens the file,
+# otherwise open in current dir
+function vim {
+    if [ $# -eq 0 ]; then
+        if [ -z "$(ls -A .)" ]; then
+            nvim
+	else
+            nvim .
+	fi
+    else
+        nvim "$@"
+    fi
+}
+
+# unzip a `.zip` file and delete the archive
+function dezip {
+    unzip "$@"
+    if [[ $? -eq 0 ]]; then
+	rm "$@"
+    fi
+}
+
+# unzip a `.tar.gz` file and delete the archive
+function detar {
+    tar -xf "$@"
+    if [[ $? -eq 0 ]]; then
+	rm "$@"
+    fi
+}
+
+# print the current timestamp
+function clock {
+    local num=${1:--1}
+    printf '%(%B %d, %Y %-I:%M:%S %p %Z)%\n' "$num"
+}
+
+# this is the section where I start stealing from dave eddy aka bahamas10
+# he's done a lot of amazing things with bash, but i feel like installing
+# an entirely new thing (bics) is just a bit much for this, especially
+# since I want to be able to just clone this repo on a fresh install
+
+# https://github.com/bahamas10/bash-cdstack/blob/master/cdstack.bash
+# cd Stack management
+#
+# You `cd` around like you normally would, and the directories are pushed
+# into a stack.  Use the function `s` to view the stack of directories,
+# and run `s $num` to `cd` into the directory listed.
+#
+# inspired by http://www.derekwyatt.org/2011/08/18/my-bash-directory-management/
+#
+# Author: Dave Eddy <dave@daveeddy.com>
+# License: MIT
+
+# config
+CD_STACK_MAX=${CD_STACK_MAX:-15}
+#CD_STACK_REVERSE=   set by environment
+
+# internal
+_CD_STACK=("$PWD")
+_CD_STACK_PTR=0
+
+cd() {
+	builtin cd "$@"
+	local ret=$?
+	((ret == 0)) || return "$ret"
+
+	_CD_STACK=("$PWD" "${_CD_STACK[@]}")
+	if ((${#_CD_STACK[@]} > CD_STACK_MAX)); then
+		unset _CD_STACK[${#_CD_STACK[@]}-1]
+	fi
+	_CD_STACK_PTR=0
+
+	return "$ret"
+}
+
+s() {
+	if [[ -n $1 ]]; then
+		local dir=${_CD_STACK[$1]}
+		builtin cd "$dir"
+		local ret=$?
+		if ((ret == 0)) && [[ -n $dir ]]; then
+			_CD_STACK_PTR=$1
+		fi
+		return "$ret"
+	fi
+
+	local max=${#_CD_STACK[@]}
+	local i
+	local arrow="$(tput setaf 2)->$(tput sgr0)"
+	for ((i = 0; i < max; i++)); do
+		local j=$i
+		[[ -n $CD_STACK_REVERSE ]] && j=$((max - 1 -i))
+		if ((j == _CD_STACK_PTR)); then
+			echo -n "$arrow"
+		else
+			echo -n '  '
+		fi
+		printf '%2d: %s\n' "$j" "${_CD_STACK[$j]/#$HOME/\~}"
+	done
+}
+
+b() {
+	s "$((_CD_STACK_PTR + 1))"
+}
+
+# https://github.com/bahamas10/bash-analysis/blob/master/analysis.bash
+# Add commas to a given inputs numbers
+#
+# $ echo '100000 / 100000000' | commas
+# 100,000 / 100,000,000
+commas() {
+	sed -e :a -e 's/\(.*[0-9]\)\([0-9]\{3\}\)/\1,\2/;ta'
+}
+
+# Grab a field from given input
+# Adapted from http://www.brendangregg.com/Shell/field
+#
+# $ echo -e '  three    different\tcolumns ' | field 2
+# different
+field() {
+	awk -F "${2:- }" "{ print \$${1:-1} }"
+}
+
+# Print gaps in numbers (inclusively)
+# http://stackoverflow.com/questions/15867557/finding-gaps-sequential-numbers
+#
+# $ cat data
+# 1
+# 2
+# 3
+# 6
+# 10
+# $ cat data
+# 4-5
+# 7-9
+gaps() {
+	awk '$1 != (p+1) { print p+1 "-" $1-1 } { p = $1 }'
+}
+

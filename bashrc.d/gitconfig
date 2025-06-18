@@ -1,0 +1,7 @@
+[user]
+	name = Moritz Perschke
+	email = perschkemoritz@gmail.com
+[color]
+	ui = auto
+[pull]
+	rebase = false

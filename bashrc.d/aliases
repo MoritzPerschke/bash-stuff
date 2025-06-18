@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# if [[ $(bat --version) || $(batcat --version) ]]; then
+if [[ -x "$(command -v batcat -V)" || -x "$(command -v batcat -V)" ]]; then
+	alias cat='batcat'
+fi
+
+# if [[ $(xclipboard -version) ]]; then
+# 	alias xclipboard='xclip -selection clipboard'
+# fi
+
+alias hl='tg --passthru'
+alias l='ls'
+alias ll='ls -lha'
+
+# typo-fixer aliases
+alias vmi='vim'
