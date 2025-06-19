@@ -19,8 +19,15 @@ alias ll='ls -lha'
 # typo-fixer aliases, append as needed
 alias vmi='vim'
 
+alias s0='s 0'
+alias s1='s 1'
+alias s2='s 2'
+alias s3='s 3'
+alias s4='s 4'
+
 # git shortcuts
 alias gs='git status'
 alias ga='git add'
 alias gp='git pull'
 alias gc='git commit -m'
+alias gd='git diff'

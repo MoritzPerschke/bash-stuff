@@ -66,7 +66,7 @@ cd() {
 	local ret=$?
 	((ret == 0)) || return "$ret"
 
-	if ! [[ ${_CD_STACK[@]} =~ "$PWD" ]]; then
+	if ! printf '%s\n' "${_CD_STACK[@]}" | grep -Fxq -- "$PWD"; then
             _CD_STACK=("$PWD" "${_CD_STACK[@]}")
             if ((${#_CD_STACK[@]} > CD_STACK_MAX)); then
 	        unset _CD_STACK[${#_CD_STACK[@]}-1]

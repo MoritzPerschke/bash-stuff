@@ -11,3 +11,50 @@ export EDITOR="$VISUAL"
 
 # Case-insensitive autocomplete
 set completion-ignore-case on
+
+# PS1 Line
+# Define colors
+RESET='\[\e[0m\]'
+BOLD_GREEN='\[\e[1;32m\]'
+BOLD_RED='\[\e[1;31m\]'
+BOLD_WHITE='\[\e[1;37m\]'
+TEAL='\[\e[38;5;37m\]'
+OLIVE='\[\e[38;5;100m\]'
+GRAY='\[\e[38;5;247m\]'
+BOLD_MAGENTA='\[\e[1;35m\]'
+
+# Define exit code face globally
+function set_exitcode() {
+    local status=$?
+    if [ "$status" -eq 0 ]; then
+        EXITFACE="${BOLD_MAGENTA}(>ᴗ<)"
+    else
+        EXITFACE="${BOLD_RED}(×_×)"
+    fi
+}
+
+# Git info
+function set_gitinfo() {
+    local branch
+    branch=$(git symbolic-ref --short HEAD 2>/dev/null) || { GITINFO=""; return; }
+
+    local dirty=""
+    if ! git diff --quiet 2>/dev/null || ! git diff --cached --quiet 2>/dev/null; then
+        dirty=" ${BOLD_RED}✗"
+    else
+        dirty=" ${BOLD_GREEN}✓"
+    fi
+
+    GITINFO="${TEAL}─(${GRAY}${branch}${TEAL}${dirty}${TEAL})"
+}
+
+# Full prompt setup
+function set_prompt() {
+    set_exitcode
+    set_gitinfo
+	local window_title="\[\e]0;\u@\h (\W)\a\]"
+
+    PS1="${window_title}\n${TEAL}┌─[${GRAY}\u@\h${TEAL}]${GITINFO}${GRAY}(\w)\n${TEAL}└─${TEAL}[${GRAY}\A${TEAL}] ${EXITFACE} ${TEAL}${BOLD_GREEN}\$ ${RESET}"
+}
+
+PROMPT_COMMAND=set_prompt
