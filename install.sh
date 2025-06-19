@@ -1,17 +1,18 @@
 #! /bin/bash
 
 # where to link the scripts to, this should be in path
+this="$(realpath "$0")"
 target="$HOME/.local/bin/"
-this=$(basename "$0")
 
 for file in ./scripts/*.sh; do
-	if [ "$file" = "$this" ] || [ ! -f "$file" ]; then
-		continue
-	fi
+    # Skip this script or non-regular files
+    [ "$file" = "$this" ] || [ ! -f "$file" ] && continue
 
-	link="${file%.sh}"
-	sudo chmod +x $file
-	ln -sf "$(pwd)/$file" "$target$link"
+    link="${file%.sh}"                    # Strip .sh extension
+    linkname="$(basename "$link")"        # Get name without path
+
+    sudo chmod +x "$file"                 # Make it executable
+    sudo ln -sf "$(realpath "$file")" "$target$linkname"
 done
 
 if ! [ -d ~/.bashrc.d ]; then
