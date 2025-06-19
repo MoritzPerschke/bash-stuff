@@ -1,12 +1,13 @@
 #!/bin/bash
 
-# Add an "alert" alias for long running commands
-# Taken from the pop_os bashrc
-alias alert='notify-send --urgency=normal -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
 # don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
+# Commands to ignore when appending to history
+HISTIGNORE='clear:history:ls'
 
+# Use neovim as default editor
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 
+# Case-insensitive autocomplete
+set completion-ignore-case on
