@@ -11,7 +11,7 @@ for file in *.sh; do
 
 	link="${file%.sh}"
 	sudo chmod +x $file
-	ln -s "$(pwd)/$file" "$target$link"
+	ln -sf "$(pwd)/$file" "$target$link"
 done
 
 if ! [ -d ~/.bashrc.d ]; then
@@ -19,6 +19,7 @@ if ! [ -d ~/.bashrc.d ]; then
 fi
 ln -sf "$(pwd)/bashrc.d/functions" "$HOME/.bashrc.d/functions"
 ln -sf "$(pwd)/bashrc.d/aliases" "$HOME/.bashrc.d/aliases"
+ln -sf "$(pwd)/bashrc.d/bashconfig" "$HOME/.bashrc.d/bashconfig"
 ln -sf "$(pwd)/bashrc.d/gitconfig" "$HOME/.gitconfig"
 
 # echo -e "\nif [ -d ~/.bashrc.d ]; then\n\t. ~/.bash_custom\nfi" | tee -a ~/.bashrc
