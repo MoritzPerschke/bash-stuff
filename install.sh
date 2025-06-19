@@ -4,7 +4,7 @@
 target="$HOME/.local/bin/"
 this=$(basename "$0")
 
-for file in *.sh; do
+for file in ./scripts/*.sh; do
 	if [ "$file" = "$this" ] || [ ! -f "$file" ]; then
 		continue
 	fi
