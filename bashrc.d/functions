@@ -36,14 +36,15 @@ function clock {
     printf '%(%B %d, %Y %-I:%M:%S %p %Z)%\n' "$num"
 }
 
-# this is the section where I start stealing from dave eddy aka bahamas10
-# he's done a lot of amazing things with bash, but i feel like installing
-# an entirely new thing (bics) is just a bit much for this, especially
-# since I want to be able to just clone this repo on a fresh install
+###########################################################################
+# this is the section where I start stealing from dave eddy aka bahamas10 #
+# he's done a lot of amazing things with bash, but i feel like installing #
+# an entirely new thing (bics) is just a bit much for this, especially    #
+# since I want to be able to just clone this repo on a fresh install      #
+###########################################################################
 
-# https://github.com/bahamas10/bash-cdstack/blob/master/cdstack.bash
-# cd Stack management
-#
+# https://github.com/bahamas10/bash-cdstack/blob/master/cdstack.bash      
+# cd Stack management                                                     
 # You `cd` around like you normally would, and the directories are pushed
 # into a stack.  Use the function `s` to view the stack of directories,
 # and run `s $num` to `cd` into the directory listed.
@@ -107,7 +108,9 @@ b() {
 	s "$((_CD_STACK_PTR + 1))"
 }
 
-# https://github.com/bahamas10/bash-analysis/blob/master/analysis.bash
+###########################################################################
+# https://github.com/bahamas10/bash-analysis/blob/master/analysis.bash    #
+###########################################################################
 # Add commas to a given inputs numbers
 #
 # $ echo '100000 / 100000000' | commas

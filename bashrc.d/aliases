@@ -1,5 +1,10 @@
 #!/bin/bash
 
+
+#####################################################################
+#        Some aliases only make sense to set if the required        #
+#                      utility is installed                         #
+#####################################################################
 if [[ -x "$(command -v batcat -V)" || -x "$(command -v batcat -V)" ]]; then
 	alias cat='batcat'
 fi
@@ -12,20 +17,29 @@ fi
 # Taken from the pop_os bashrc
 alias alert='notify-send --urgency=normal -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# ls aliases
+#####################################################################
+#        ls aliases                                                 #
+#####################################################################
 alias l='ls'
 alias ll='ls -lha'
 
-# typo-fixer aliases, append as needed
+#####################################################################
+#        typo-fixer aliases, append as needed                       #
+#####################################################################
 alias vmi='vim'
 
+#####################################################################
+#        aliases to make cd-stack simpler                           #
+#####################################################################
 alias s0='s 0'
 alias s1='s 1'
 alias s2='s 2'
 alias s3='s 3'
 alias s4='s 4'
 
-# git shortcuts
+#####################################################################
+#        git shortcuts                                              #
+#####################################################################
 alias gs='git status'
 alias ga='git add'
 alias gp='git pull'
