@@ -40,7 +40,7 @@ The following things are stolen from DaveEddy(bahamas10)
     - Emoji changes on exitcode
     - 24h timestamp
 ```bash
-┌─[moritz@pop-os]─(main ✗)(~/.bash-git)
+┌─[username@host]─(main ✗/✓)("$PWD")
 └─[00:00] (>ᴗ<) $
 ```
 
