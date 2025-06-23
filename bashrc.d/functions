@@ -36,6 +36,45 @@ function clock {
     printf '%(%B %d, %Y %-I:%M:%S %p %Z)%\n' "$num"
 }
 
+# Wait for n seconds before executing command,
+# prints countdown
+
+function countdown() {
+    local delay=3
+    # Parse options
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -t|--time)
+                delay="$2"
+                shift 2
+                ;;
+            --) # End of options
+                shift
+                break
+                ;;
+            -*) # Unknown option
+                echo "Unknown option: $1"
+                return 1
+                ;;
+            *)  # First non-option — assume start of command
+                break
+                ;;
+        esac
+    done
+
+    if [ $# -lt 1 ]; then
+        echo "Usage: countdown [-t seconds] <command>"
+        return 1
+    fi
+
+    for i in $(seq 1 "$delay"); do
+	echo -n "$((delay - i + 1)) "
+	sleep 1
+    done
+    echo ""
+    "$@"
+}
+
 ###########################################################################
 # this is the section where I start stealing from dave eddy aka bahamas10 #
 # he's done a lot of amazing things with bash, but i feel like installing #
