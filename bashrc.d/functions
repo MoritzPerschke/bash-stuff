@@ -24,7 +24,7 @@ function dezip {
 
 # unzip a `.tar.gz` file and delete the archive
 function detar {
-    tar -xf "$@"
+    tar -xvf "$@"
     if [[ $? -eq 0 ]]; then
 	rm "$@"
     fi
