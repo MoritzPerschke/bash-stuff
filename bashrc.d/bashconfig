@@ -10,7 +10,13 @@ export VISUAL=nvim
 export EDITOR="$VISUAL"
 
 # Case-insensitive autocomplete
-set completion-ignore-case on
+# https://askubuntu.com/questions/87061/can-i-make-tab-auto-completion-case-insensitive-in-bash
+# If ~/.inputrc doesn't exist yet: First include the original /etc/inputrc
+# so it won't get overriden
+if [ ! -a ~/.inputrc ]; then echo '$include /etc/inputrc' > ~/.inputrc; fi
+
+# Add shell-option to ~/.inputrc to enable case-insensitive tab completion
+echo 'set completion-ignore-case On' >> ~/.inputrc
  
 #####################################################################
 #                This section is taken from here                    #
@@ -28,7 +34,7 @@ bind Space:magic-space
 bind "set completion-map-case on"
 
 # Display matches for ambiguous patterns at first tab press
-bind "set show-all-if-ambiguous on"
+# bind "set show-all-if-ambiguous on"
 
 # Use standard ISO 8601 timestamp
 # %F equivalent to %Y-%m-%d
