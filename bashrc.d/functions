@@ -3,7 +3,7 @@
 # "alias" `vim` to neovim, if given an argument opens the file,
 # otherwise open in current dir
 function vim {
-    if [ $# -eq 0 ]; then
+    if [[ $# -eq 0 ]]; then
         if [ -z "$(ls -A .)" ]; then
             nvim
 	else
@@ -75,12 +75,40 @@ function countdown() {
     "$@"
 }
 
-###########################################################################
-# this is the section where I start stealing from dave eddy aka bahamas10 #
-# he's done a lot of amazing things with bash, but i feel like installing #
-# an entirely new thing (bics) is just a bit much for this, especially    #
-# since I want to be able to just clone this repo on a fresh install      #
-###########################################################################
+function rgf() {
+    if [[ -x "$(command -v rg --version)" ]]; then
+	while [[ $# -gt 0 ]]; do
+	    case "$1" in
+		-h|--hidden)
+		    echo "searches hidden files by default, switc not implemented yet"
+		    shift 2
+		    ;;
+		--) # End of options
+		    shift
+		    break
+		    ;;
+		-*) # Unknown option
+		    echo "Unknown option: $1"
+		    return 1
+		    ;;
+		*)  # First non-option — assume start of command
+		    break
+		    ;;
+	    esac
+	done
+
+	rg --files --hidden | rg "$@"
+    else
+	echo "Ripgrep is not installed"
+    fi
+}
+
+############################################################################
+# this is the section where I start stealing from dave eddy aka bahamas10  #
+# I just don't feel like installing an entirely new thing (bics) for this, #
+# especially since I want to be able to just clone this repo on a fresh    #
+# install							           #
+############################################################################
 
 # https://github.com/bahamas10/bash-cdstack/blob/master/cdstack.bash      
 # cd Stack management                                                     
