@@ -7,3 +7,9 @@
 	rebase = false
 [mergetool "vimdiff"]
     layout = LOCAL,MERGED,REMOTE
+[alias]
+	stash-untracked = "!f() {    \
+		git stash;               \
+		git stash -u;            \
+		git stash pop stash@{1}; \
+	}; f"
