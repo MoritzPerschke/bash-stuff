@@ -84,7 +84,7 @@ function set_gitinfo() {
         dirty=" ${BOLD_GREEN}✓"
     fi
 
-    GITINFO="${TEAL}─(${GRAY}${branch}${TEAL}${dirty}${TEAL})"
+    GITINFO="${TEAL}─(${GRAY}${branch}${TEAL}${dirty}${TEAL})"
 }
 
 # Full prompt setup

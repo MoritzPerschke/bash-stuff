@@ -1,6 +1,6 @@
 #!/bin/bash -i
 # get command before this scripts shebang and invocation of script
-last_command=$(fc -ln -4 -4 | sed 's/^[ \t]*//')
+last_command=$(fc -ln -5 -5 | sed 's/^[ \t]*//')
 s_flag=false
 S_flag=false
 delete_original=false
