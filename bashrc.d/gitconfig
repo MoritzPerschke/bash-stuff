@@ -5,17 +5,21 @@
 	ui = auto
 [pull]
 	rebase = false
+
 [merge]
-	tool = vimdiff
-[mergetool "vimdiff"]
-	prompt = false
-	keepBackup = false
-	layout = "LOCAL,BASE,REMOTE / MERGED"
+	tool = nvimdiff
+[mergetool "nvimdiff"]
+    prompt = false
+    keepBackup = false
+    layout = "LOCAL,BASE,REMOTE / MERGED"
+    cmd = nvim -n -d "$LOCAL" "$BASE" "$REMOTE" "$MERGED"
+
 [diff]
 	tool = nvimdiff
 [difftool "nvimdiff"]
 	prompt = false
 	cmd = nvim -n -d \"$REMOTE\" \"$LOCAL\"
+
 [alias]
 	stash-untracked = "!f() {    \
 		git stash;               \
