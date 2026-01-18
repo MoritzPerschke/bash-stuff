@@ -4,12 +4,20 @@
 #        Some aliases only make sense to set if the required        #
 #                      utility is installed                         #
 #####################################################################
-if [[ -x "$(command -v batcat -V)" || -x "$(command -v batcat -V)" ]]; then
+if [[ -x "$(command -v bat -V)" ]]; then
+	alias cat='bat'
+fi
+
+if [[ -x "$(command -v batcat -V)" ]]; then
 	alias cat='batcat'
 fi
 
 if [[ -x "$(command -v xclipboard -version)" ]]; then
 	alias xclipboard='xclip -selection clipboard'
+fi
+
+if [[ -x "$(command -v lazygit -v)" ]]; then
+	alias lg='lazygit'
 fi
 
 # Add an "alert" alias for long running commands
@@ -21,13 +29,18 @@ alias alert='notify-send --urgency=normal -i "$([ $? = 0 ] && echo terminal || e
 #####################################################################
 alias l='ls'
 alias ll='ls -lha'
+alias la='ls -la'
 
 #####################################################################
 #        typo-fixer aliases, append as needed                       #
 #####################################################################
 alias v='vim'
+alias vv='vim'
 alias vmi='vim'
 alias vvim='vim'
+
+alias cd.='cd ..'
+alias cd..='cd ..'
 
 #####################################################################
 #        aliases to make cd-stack simpler                           #
