@@ -22,3 +22,7 @@
 		git stash -u;            \
 		git stash pop stash@{1}; \
 	}; f"
+[init]
+	defaultBranch = main
+[core]
+	excludesFile = /home/moritz/.bash-git/gitignore
