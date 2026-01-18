@@ -5,24 +5,21 @@
 	ui = auto
 [pull]
 	rebase = false
+
 [merge]
-	tool = vimdiff
-[mergetool "vimdiff"]
-	prompt = false
-	keepBackup = false
-	layout = "LOCAL,BASE,REMOTE / MERGED"
+    tool = nvimdiff
+
+[mergetool]
+    prompt = false
+
+[mergetool "nvimdiff"]
+    keepBackup = false
+
 [diff]
-	tool = nvimdiff
+    tool = nvimdiff
+
+[difftool]
+    prompt = false
+
 [difftool "nvimdiff"]
-	prompt = false
-	cmd = nvim -n -d \"$REMOTE\" \"$LOCAL\"
-[alias]
-	stash-untracked = "!f() {    \
-		git stash;               \
-		git stash -u;            \
-		git stash pop stash@{1}; \
-	}; f"
-[init]
-	defaultBranch = main
-[core]
-	excludesFile = /home/moritz/.bash-git/gitignore
+    cmd = nvim -n -d "$LOCAL" "$REMOTE"

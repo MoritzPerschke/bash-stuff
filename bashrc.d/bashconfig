@@ -72,6 +72,14 @@ function set_exitcode() {
     fi
 }
 
+function set_venvinfo() {
+    if [ -n "$VIRTUAL_ENV" ]; then
+        VENVINFO="-${TEAL}[${GRAY}$(basename "$VIRTUAL_ENV")${TEAL}]"
+    else
+        VENVINFO="-"
+    fi
+}
+
 # Git info
 function set_gitinfo() {
     local branch
@@ -84,16 +92,17 @@ function set_gitinfo() {
         dirty=" ${BOLD_GREEN}✓"
     fi
 
-    GITINFO="${TEAL}─(${GRAY}${branch}${TEAL}${dirty}${TEAL})"
+    GITINFO="${TEAL}[${GRAY}${branch}${TEAL}${dirty}${TEAL}]-"
 }
 
 # Full prompt setup
 function set_prompt() {
     set_exitcode
     set_gitinfo
+    set_venvinfo
 	local window_title="\[\e]0;\u@\h (\W)\a\]"
 
-    PS1="${window_title}\n${TEAL}┌─[${GRAY}\u@\h${TEAL}]${GITINFO}${GRAY}(\w)\n${TEAL}└─${TEAL}[${GRAY}\A${TEAL}] ${EXITFACE} ${TEAL}${BOLD_GREEN}\$ ${RESET}"
+    PS1="${window_title}\n${TEAL}┌─[${GRAY}\u@\h${TEAL}]${VENVINFO}${GITINFO}${GRAY}(\w)\n${TEAL}└─${TEAL}[${GRAY}\A${TEAL}] ${EXITFACE} ${TEAL}${BOLD_GREEN}\$ ${RESET}"
 }
 
 PROMPT_COMMAND=set_prompt
