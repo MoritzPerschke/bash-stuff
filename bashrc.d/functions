@@ -31,9 +31,9 @@ function detar {
 }
 
 # print the current timestamp
-function clock {
+clock() {
     local num=${1:--1}
-    printf '%(%B %d, %Y %-I:%M:%S %p %Z)%\n' "$num"
+    printf '%(%B %d, %Y %-I:%M:%S %p %Z)T\n' "$num"
 }
 
 # Wait for n seconds before executing command,
@@ -100,6 +100,63 @@ function rgf() {
 	rg --files --hidden | rg "$@"
     else
 	echo "Ripgrep is not installed"
+    fi
+}
+
+function random() {
+    tr -dc A-Za-z0-9 </dev/urandom | head -c "$1"; echo
+}
+
+function fileclean() {
+    for i in "$@"; do
+        new="${i// /_}"
+        mv "$i" "$new"
+    done
+}
+
+function bkp() {
+    local HELPSTRING="Usage: bkp [-hmu] filename
+    -m : move instead of copying
+    -u : undo backup (filename.bkp -> filename)
+    -h : print this message
+    "
+
+    local OPERATION=cp
+    local UNDO=false
+
+    OPTIND=1
+    while getopts "muh" opt; do
+        case "$opt" in
+            m)
+                OPERATION=mv
+                ;;
+            u)
+                UNDO=true
+                ;;
+            h)
+                echo "$HELPSTRING"
+                return 0
+                ;;
+            *)
+                echo "$HELPSTRING"
+                return 1
+                ;;
+        esac
+    done
+
+    shift $((OPTIND - 1))
+
+    if [[ -z "$1" ]]; then
+	echo "Invalid Usage:"
+        echo "$HELPSTRING"
+        return 1
+    fi
+
+    if $UNDO; then
+        echo "$1 -> ${1%.bkp}"
+        "$OPERATION" "$1" "${1%.bkp}"
+    else
+        "$OPERATION" "$1" "$1.bkp"
     fi
 }
 
