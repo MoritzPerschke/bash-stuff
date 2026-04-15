@@ -14,6 +14,7 @@ Relevant aliases have a check to only be applied if the relevant tools are avail
 ### Functions
 
 - `vim`: function to wrap nvim, if given a file opens the file, otherwise opens current dir
+- `vt`: opens a file in the `/tmp` directory named after the current directory and 10 random characters
 - `dezip` and `detar`: extract given archive and delete it
 
 The following things are stolen from DaveEddy(bahamas10)
