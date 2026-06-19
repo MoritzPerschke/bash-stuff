@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 CMD=cp
-TARGETDIR=""
+TARGETDIR="$PWD/"
 FUN=backup
 
 usage() {
@@ -10,26 +10,38 @@ Options:
 	-m  'mv' the files instead of copying
 	-t  set /tmp as target
 	-d  specify target directory
-	-r  'recover' target files (foo.c.bkp -> foo.c)
+	-r  'recover' target files (foo.c.bkp -> foo.c); *ALWAYS* uses mv
 	"
 }
 
 recover() {
-	for file in "$@"; do
-		STRIPPED="$(basename $file .bkp)"
-		echo "$CMD $file -> $TARGETDIR$STRIPPED"
-		$CMD $file $TARGETDIR$STRIPPED
-	done
+
+	[[ $1 == *.bkp ]] || { echo "refusing to recover file not ending in .bkp: '$1'" >&2; exit 1; }
+
+	local STRIPPED="$(basename "$1" .bkp)"
+	local DEST="$TARGETDIR$STRIPPED"
+	if [[ -d $DEST ]]; then
+		rm -r "$DEST" || exit 1
+	fi
+
+	echo "mv $1 -> $DEST"
+	mv "$1" "$DEST"
 }
 
 backup() {
-	for file in "$@"; do
-		echo "$CMD $file -> $TARGETDIR$file.bkp"
-		$CMD $file "$TARGETDIR$file.bkp"
-	done
+	local FILE=$1
+	local DEST="$TARGETDIR$FILE"
+	if [[ $CMD == "cp" && -d "$1" ]]; then
+		local CMD="cp -r"
+		DEST="${DEST%/}"
+		
+	fi
+
+	echo "$CMD $FILE -> $DEST.bkp"
+	$CMD "$FILE" "$DEST.bkp"
 }
 
-while getopts mtd:rh opt; do
+while getopts :mtd:rh opt; do
 	case "$opt" in
 		m)
 			CMD=mv
@@ -52,4 +64,6 @@ while getopts mtd:rh opt; do
 	esac
 done
 
-$FUN "${@:$OPTIND}"
+for file in "${@:$OPTIND}"; do
+	$FUN "$file"
+done

@@ -58,7 +58,19 @@ Uses `ln` to link each `./<scriptname>.sh` to `$HOME/.local/bin/script` so that 
 Creates a `~/.bashrc.d` directory and symlinks all the config stuff
 appends to existing bashrc to source everything in the new dir
 
+### bkp
+Used for quickly copying a file/directory to `name.bkp` and restore if needed.
+
+Options supported:
+```bash
+	-m  'mv' the files instead of copying
+	-t  set /tmp as target
+	-d  specify target directory
+	-r  'recover' target files (foo.c.bkp -> foo.c); *ALWAYS* overwrites
+```
+
 ### getlast
+
 When doing something in my shell that I then later want to share, for example the setup for a project or homework where I have collaborators, it's really annoying to then later go through my history and copy each command one by one.
 I also don't like using `script`, as I often `ls` or `cat` stuff, and those don't need to be in there either.
 So with this script, whenever I run a relevant command I can then run `getlast` to append it to a sort of 'condensed history' file.
@@ -71,15 +83,21 @@ The script also supports a couple options:
     -h            : help
     
 ```
+
+> [!CAUTION]
+> I've found this script to be **very** fragile w.r.t. what it uses as the "last" command and I still have not found a good solution*
+
 ### archive
 Simple archiving script, walks all subdirectories in current dir
     - pulls in every directory which contains a `.git` directory
     - deletes `build` `target` `env` directories
 Written to archive my Uni work at the end of the semester
 
+> [!NOTE]
+> I am aware that there are way better options than it's current implementation, i just haven't felt the need to update it since I last needed it
+
 ### pinger
-As part of my job at the [Innbsrucker Zeitungsarchiv](https://www.uibk.ac.at/iza/), I need to know whenever one of the websites goes down.
+As part of stint as a sysadmin I needed to know whenever one of the websites goes down.
 This script requires the file `$HOME/.ping_urls.txt`, which should contain one URL per line.
 It then uses `curl` to get a status code from each of the urls in turn, and prints it.
-
 
