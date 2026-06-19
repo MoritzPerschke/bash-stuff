@@ -1,13 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # might be a bad idea, i just don't want to keep typing the stderr redirect
-function ffind {
+ffind() {
     find $@  2>/dev/null
 }
 
 # "alias" `vim` to neovim, if given an argument opens the file,
 # otherwise open in current dir
-function vim {
+vim() {
     if [[ $# -eq 0 ]]; then
         if [ -z "$(ls -A .)" ]; then
             nvim
@@ -19,7 +19,7 @@ function vim {
     fi
 }
 
-function vt {
+vt() {
     nvim "/tmp/$(basename $(pwd))_$(random 10)"
 }
 
@@ -32,7 +32,7 @@ function dezip {
 }
 
 # unzip a `.tar.gz` file and delete the archive
-function detar {
+detar() {
     tar -xvf "$@"
     if [[ $? -eq 0 ]]; then
 	rm "$@"
@@ -48,7 +48,7 @@ clock() {
 # Wait for n seconds before executing command,
 # prints countdown
 
-function countdown() {
+countdown() {
     local delay=3
     # Parse options
     while [[ $# -gt 0 ]]; do
@@ -84,7 +84,7 @@ function countdown() {
     "$@"
 }
 
-function rgf() {
+rgf() {
     if [[ -x "$(command -v rg --version)" ]]; then
 	while [[ $# -gt 0 ]]; do
 	    case "$1" in
@@ -112,18 +112,18 @@ function rgf() {
     fi
 }
 
-function random() {
+random() {
     tr -dc A-Za-z0-9 </dev/urandom | head -c "$1"; echo
 }
 
-function fileclean() {
+fileclean() {
     for i in "$@"; do
         new="${i// /_}"
         mv "$i" "$new"
     done
 }
 
-function reminder() {
+reminder() {
     systemd-run --user --on-calendar=$1 notify-send "Reminder" $2
 }
 
