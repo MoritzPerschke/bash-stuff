@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# might be a bad idea, i just don't want to keep typing the stderr redirect
+function ffind {
+    find $@  2>/dev/null
+}
+
 # "alias" `vim` to neovim, if given an argument opens the file,
 # otherwise open in current dir
 function vim {
@@ -15,7 +20,7 @@ function vim {
 }
 
 function vt {
-    nvim "/tmp/$(pwd)_$(random 10)"
+    nvim "/tmp/$(basename $(pwd))_$(random 10)"
 }
 
 # unzip a `.zip` file and delete the archive
