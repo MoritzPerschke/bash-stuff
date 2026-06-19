@@ -123,6 +123,10 @@ function fileclean() {
     done
 }
 
+function reminder() {
+    systemd-run --user --on-calendar=$1 notify-send "Reminder" $2
+}
+
 function bkp() {
     local HELPSTRING="Usage: bkp [-hmu] filename
     -m : move instead of copying
