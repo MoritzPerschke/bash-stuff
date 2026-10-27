@@ -2,30 +2,15 @@
 
 #####################################################################
 #        Some aliases only make sense to set if the required        #
-#                      utility is installed                         #
+#     utility is installed (a lot of these have been moved to hm)   #
 #####################################################################
-if [[ -x "$(command -v bat -V)" ]]; then
-	alias cat='bat'
-fi
-
-if [[ -x "$(command -v batcat -V)" ]]; then
-	alias cat='batcat'
-fi
-
-if [[ -x "$(command -v fzf --version)" ]]; then
-	alias f='fzf'
-fi
-
 if [[ -x "$(command -v xclipboard -version)" ]]; then
 	alias xclipboard='xclip -selection clipboard'
 fi
 
-if [[ -x "$(command -v lazygit)" ]]; then
-	alias lg='lazygit'
-fi
-
-if [[ -x "$(command -v kitty -v)" ]]; then
-	alias ssh="kitten ssh"
+if [[ -x "$(command -v cargo version)" ]]; then
+	alias cch='cargo check'
+	alias ccr='cargo run'
 fi
 
 
@@ -76,6 +61,7 @@ alias s9='s 9'
 alias gs='git status'
 alias ga='git add'
 alias gp='git pull'
+alias gP='git push'
 alias gc='git commit -m'
 alias gca='git commit --amend'
 alias gd='git diff'
